@@ -22,6 +22,7 @@ module.exports = Object.freeze({
   APPNAME:       appname,
   BASE:          base,
   DATADIR:       data_dir,
+  DB_EXTENSION:  'db.json',
 
   /* functions */
   dataDirFile: dataDirFile,

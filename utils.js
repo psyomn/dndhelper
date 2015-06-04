@@ -1,4 +1,4 @@
-module.exports = {make_data_dirs: make_data_dirs};
+module.exports = {makeDataDirs: makeDataDirs};
 
 var constants = require('./constants.js');
 var fs        = require('fs');
@@ -10,7 +10,7 @@ var colors    = require('colors');
  * Will check for existance of $HOME/.config/dndhelper and will
  * create directory if no such directory exists
  */
-function make_data_dirs() {
+function makeDataDirs() {
   if (!data_dir_exists()) {
     console.log("Running for first time!".green);
     console.log("Creating data directories...");

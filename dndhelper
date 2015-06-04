@@ -1,12 +1,32 @@
 #!/usr/bin/env node
-var utils = require('./utils.js');
-var entity_factory = require('./entity_factory.js');
+var argv            = require('minimist')(process.argv.slice(2));
+var utils           = require('./utils.js');
+var entity_factory  = require('./entity_factory.js');
+var config          = require('./config.js');
+
+if (Object.keys(argv).length == 1) {
+  console.log("Usage:");
+  console.log("  dndhelper <command> [options]");
+  console.log("Where command can be one of: ");
+  console.log("  --lsdb to list all the databases available");
+  console.log("  --setdb <index> to set the interested database");
+  console.log("  --lsschema to show the schemas");
+  console.log("  --setschema to set the schemas");
+  console.log("  --show-entities to show all entities");
+  process.exit();
+}
 
 /* Whenever you run, you want to check for dirs */
-utils.make_data_dirs();
+utils.makeDataDirs();
 
-var entities = entity_factory.makeFromJSON('dnd4.js');
+if (argv['lsdb']) {
+  config.listDataSources();
+}
 
-entities.forEach(function(e){
-e.toTable();
-});
+else if (argv['show-entities']) {
+  /* TODO this should actually get whatever is set from the datasources  */
+  var entities = entity_factory.makeFromJSON('dnd4.db.json');
+  entities.forEach(function(e){
+     e.toTable();
+  });
+}
