@@ -1,6 +1,7 @@
 {
   "name": "dndhelper",
   "version": "0.0.1",
+  "bin": "./dndhelper",
   "description": "A simple dnd helper for monster info and randomization (no data provided)",
   "main": "dndhelper.js",
   "scripts": {
@@ -16,9 +17,7 @@
   "dependencies": {
     "cli-table": "^0.3.1",
     "colors": "^1.1.0",
+    "minimist": "^1.1.1",
     "mkdirp": "^0.5.1"
-  },
-  "bin": {
-    "./dndhelper"
   }
 }
