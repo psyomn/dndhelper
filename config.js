@@ -42,3 +42,21 @@ function lsFiltered(ext) {
 
   return filtered;
 }
+
+/**
+ * Reads the configuration information about application, stored in DATADIR.
+ * @return JSON an object denoting the current configuration.
+ */
+function readConfiguration() {
+  var file = constants.CONFIG;
+  var contents = fs.readFileSync(file);
+  return JSON.parse(contents);
+}
+
+/**
+ * Write the configuration out to some file.
+ */
+function writeConfiguration(json) {
+
+}
+

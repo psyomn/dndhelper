@@ -22,7 +22,9 @@ utils.makeDataDirs();
 if (argv['lsdb']) {
   config.listDataSources();
 }
-
+if (argv['setdb']) {
+  config.setDataSource(argv['setdb']);
+}
 else if (argv['show-entities']) {
   /* TODO this should actually get whatever is set from the datasources  */
   var entities = entity_factory.makeFromJSON('dnd4.db.json');
