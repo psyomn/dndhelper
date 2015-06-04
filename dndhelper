@@ -1,3 +1,12 @@
 #!/usr/bin/env node
 var utils = require('./utils.js');
+var entity_factory = require('./entity_factory.js');
+
+/* Whenever you run, you want to check for dirs */
 utils.make_data_dirs();
+
+var entities = entity_factory.makeFromJSON('dnd4.js');
+
+entities.forEach(function(e){
+e.toTable();
+});
