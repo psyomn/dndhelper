@@ -4,6 +4,7 @@ var path = require('path');
 var appname = 'dndhelper'
 var base = process.env.HOME;
 var data_dir = path.join(base, '.config', appname);
+var configuration = path.join(data_dir, 'configuration.json');
 
 /**
  * @param filename is the filename to append to the datadir.
@@ -23,6 +24,7 @@ module.exports = Object.freeze({
   BASE:          base,
   DATADIR:       data_dir,
   DB_EXTENSION:  'db.json',
+  CONFIG:        configuration,
 
   /* functions */
   dataDirFile: dataDirFile,
