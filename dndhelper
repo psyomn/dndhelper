@@ -23,7 +23,6 @@ if (argv['lsdb']) {
   config.listDataSources();
 }
 else if (argv['setdb'] != undefined) {
-  console.log(argv);
   config.setDataSource(argv['setdb']);
 }
 else if (argv['show-entities']) {
