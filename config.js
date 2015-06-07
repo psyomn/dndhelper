@@ -1,5 +1,6 @@
 module.exports = {
-  listDataSources: listDataSources
+  listDataSources: listDataSources,
+  setDataSource:   setDataSource
 };
 
 var constants = require('./constants.js');
@@ -12,19 +13,31 @@ var sprintf   = require('sprintf-js').sprintf;
  */
 
 function setDataSource(index) {
+  var prevConfig = readConfiguration();
+  if (prevConfig == undefined) prevConfig = {};
+  prevConfig["datasource"] = index;
+  writeConfiguration(prevConfig);
+}
+
+function getDataSource() {
+  var config = readConfiguration();
+  return config["datasource"];
 }
 
 function listDataSources() {
   var ext = constants.DB_EXTENSION;
+  var chosen = getDataSource();
   console.log('Available databases: '.green);
   lsFiltered(ext).forEach(function(e,x,a){
-    var num = sprintf("%3d", x);
+    var star = chosen == x ? '*' : ' ';
+    var num  = sprintf("%s%2d", star, x);
     var selected = ' ';
     console.log(selected + num.cyan + ' ' + e.magenta);
   });
 }
 
 function listSchemas() {
+  /** TODO */
 }
 
 /**
@@ -57,6 +70,13 @@ function readConfiguration() {
  * Write the configuration out to some file.
  */
 function writeConfiguration(json) {
-
+  var file = constants.CONFIG;
+  fs.writeFileSync(file, JSON.stringify(json));
 }
 
+function maybeCreateWrite(absPath, contents) {
+  var fd;
+  fd = fs.openSync(absPath);
+  fs.writeSync(fd, contents);
+  fs.closeSync(fd);
+}

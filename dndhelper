@@ -22,7 +22,8 @@ utils.makeDataDirs();
 if (argv['lsdb']) {
   config.listDataSources();
 }
-if (argv['setdb']) {
+else if (argv['setdb'] != undefined) {
+  console.log(argv);
   config.setDataSource(argv['setdb']);
 }
 else if (argv['show-entities']) {
