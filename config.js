@@ -1,6 +1,7 @@
 module.exports = {
   listDataSources: listDataSources,
-  setDataSource:   setDataSource
+  setDataSource:   setDataSource,
+  getDataSourceFilename: getDataSourceFilename
 };
 
 var constants = require('./constants.js');
@@ -22,6 +23,12 @@ function setDataSource(index) {
 function getDataSource() {
   var config = readConfiguration();
   return config["datasource"];
+}
+
+function getDataSourceFilename() {
+  var dataSourceIndex = getDataSource();
+  var files = lsFiltered(constants.DB_EXTENSION);
+  return files[dataSourceIndex];
 }
 
 function listDataSources() {

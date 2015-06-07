@@ -28,7 +28,8 @@ else if (argv['setdb'] != undefined) {
 }
 else if (argv['show-entities']) {
   /* TODO this should actually get whatever is set from the datasources  */
-  var entities = entity_factory.makeFromJSON('dnd4.db.json');
+  var filename = config.getDataSourceFilename();
+  var entities = entity_factory.makeFromJSON(filename);
   entities.forEach(function(e){
      e.toTable();
   });
