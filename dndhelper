@@ -20,7 +20,10 @@ if (Object.keys(argv).length == 1) {
 utils.makeDataDirs();
 
 if (argv['lsdb']) {
-  config.listDataSources();
+  config.lsDataSources();
+}
+else if (argv['lsschemas'] != undefined) {
+  config.lsSchemas();
 }
 else if (argv['setdb'] != undefined) {
   config.setDataSource(argv['setdb']);

@@ -24,6 +24,7 @@ module.exports = Object.freeze({
   BASE:          base,
   DATADIR:       data_dir,
   DB_EXTENSION:  'db.json',
+  SCHEMA_EXTENSION: 'schema.json',
   CONFIG:        configuration,
 
   /* functions */

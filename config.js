@@ -1,6 +1,7 @@
 module.exports = {
-  listDataSources: listDataSources,
-  setDataSource:   setDataSource,
+  lsDataSources: lsDataSources,
+  lsSchemas:     lsSchemas,
+  setDataSource: setDataSource,
   getDataSourceFilename: getDataSourceFilename
 };
 
@@ -31,7 +32,7 @@ function getDataSourceFilename() {
   return files[dataSourceIndex];
 }
 
-function listDataSources() {
+function lsDataSources() {
   var ext = constants.DB_EXTENSION;
   var chosen = getDataSource();
   console.log('Available databases: '.green);
@@ -43,8 +44,13 @@ function listDataSources() {
   });
 }
 
-function listSchemas() {
-  /** TODO */
+function lsSchemas() {
+  var ext = constants.SCHEMA_EXTENSION;
+  var filtered = new Array();
+
+  lsFiltered(ext).forEach(function(e,x,a) {
+    console.log(e);
+  });
 }
 
 /**
