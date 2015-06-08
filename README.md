@@ -10,3 +10,15 @@ If you're using npm packages locally, you could do the following:
 
     npm install dndhelper
 
+# Howto
+
+To list current databases:
+
+    dndhelper --lsdb
+
+To list current schemas:
+
+    dndhelper --lsschemas
+
+
+
