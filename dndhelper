@@ -4,7 +4,7 @@ var utils           = require('./utils.js');
 var entity_factory  = require('./entity_factory.js');
 var config          = require('./config.js');
 
-if (Object.keys(argv).length == 1) {
+function printHelp() {
   console.log("Usage:");
   console.log("  dndhelper <command> [options]");
   console.log("Where command can be one of: ");
@@ -16,17 +16,24 @@ if (Object.keys(argv).length == 1) {
   process.exit();
 }
 
+if (Object.keys(argv).length == 1) {
+  printHelp();
+}
+
 /* Whenever you run, you want to check for dirs */
 utils.makeDataDirs();
 
 if (argv['lsdb']) {
   config.lsDataSources();
 }
-else if (argv['lsschemas'] != undefined) {
-  config.lsSchemas();
-}
 else if (argv['setdb'] != undefined) {
   config.setDataSource(argv['setdb']);
+}
+else if (argv['setschema'] != undefined) {
+  config.setSchemaSource(argv['setschema']);
+}
+else if (argv['lsschema'] != undefined) {
+  config.lsSchemas();
 }
 else if (argv['show-entities']) {
   /* TODO this should actually get whatever is set from the datasources  */
@@ -35,4 +42,7 @@ else if (argv['show-entities']) {
   entities.forEach(function(e){
      e.toTable();
   });
+}
+else {
+  printHelp();
 }

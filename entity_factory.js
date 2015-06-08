@@ -69,3 +69,9 @@ function getContents(jsonFile) {
   return json;
 }
 
+/**
+ * Interactively crete an entity.
+ */
+function createEntityInteractive() {
+}
+

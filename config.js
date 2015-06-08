@@ -2,7 +2,7 @@ module.exports = {
   lsDataSources: lsDataSources,
   lsSchemas:     lsSchemas,
   setDataSource: setDataSource,
-  getDataSourceFilename: getDataSourceFilename
+  setSchemaSource: setSchemaSource,
 };
 
 var constants = require('./constants.js');
@@ -15,9 +15,20 @@ var sprintf   = require('sprintf-js').sprintf;
  */
 
 function setDataSource(index) {
+  var filename = lsFiltered(constants.DB_EXTENSION)[index];
+  setAttribute("datasource", filename);
+}
+
+function setSchemaSource(index) {
+  var filename = lsFiltered(constants.SCHEMA_EXTENSION)[index];
+  console.log("write: " + filename  + " , " + "Datasource");
+  setAttribute("schemasource", filename);
+}
+
+function setAttribute(label, value) {
   var prevConfig = readConfiguration();
   if (prevConfig == undefined) prevConfig = {};
-  prevConfig["datasource"] = index;
+  prevConfig[label] = value;
   writeConfiguration(prevConfig);
 }
 
@@ -26,31 +37,31 @@ function getDataSource() {
   return config["datasource"];
 }
 
-function getDataSourceFilename() {
-  var dataSourceIndex = getDataSource();
-  var files = lsFiltered(constants.DB_EXTENSION);
-  return files[dataSourceIndex];
+function getSchemaSource() {
+  var config = readConfiguration();
+  return config["schemasource"];
 }
 
 function lsDataSources() {
   var ext = constants.DB_EXTENSION;
   var chosen = getDataSource();
-  console.log('Available databases: '.green);
+  lsPretty(ext, chosen, "database");
+}
+
+function lsPretty(ext, usedFilename, label) {
+  var message = "Available " + label + "(s):";
+  console.log(message.green);
   lsFiltered(ext).forEach(function(e,x,a){
-    var star = chosen == x ? '*' : ' ';
-    var num  = sprintf("%s%2d", star, x);
-    var selected = ' ';
-    console.log(selected + num.cyan + ' ' + e.magenta);
+    var star = usedFilename == e ? '*' : ' ';
+    var num  = sprintf(" %s%2d", star, x);
+    console.log(num.cyan + ' ' + e.magenta);
   });
 }
 
 function lsSchemas() {
   var ext = constants.SCHEMA_EXTENSION;
-  var filtered = new Array();
-
-  lsFiltered(ext).forEach(function(e,x,a) {
-    console.log(e);
-  });
+  var filename = getSchemaSource();
+  lsPretty(ext, filename, "schema");
 }
 
 /**
@@ -93,3 +104,7 @@ function maybeCreateWrite(absPath, contents) {
   fs.writeSync(fd, contents);
   fs.closeSync(fd);
 }
+
+function readSchema() {
+}
+
