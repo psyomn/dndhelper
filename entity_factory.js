@@ -1,10 +1,14 @@
 module.exports = {
-  makeFromJSON: makeFromJSON
+  makeFromJSON: makeFromJSON,
+  createEntityInteractive: createEntityInteractive
 };
 
 var fs = require('fs');
 var constants = require('./constants.js');
+var config = require('./config.js');
 var Entity = require('./entity.js');
+var Type   = require('type-of-is');
+var readlineSync = require('readline-sync');
 
 /**
  * Looks for the database file (json), reads, and returns a list of
@@ -73,5 +77,50 @@ function getContents(jsonFile) {
  * Interactively crete an entity.
  */
 function createEntityInteractive() {
+  var schema = config.readSchema();
+  var entityHash = {};
+  var ent = new Entity();
+
+  Object.keys(schema).forEach(function(k){
+    var schk = schema[k];
+    if (Type.is(schk, String)) {
+      var val = readlineSync.question("Enter the " + k + ": ");
+      entityHash[k] = val;
+    }
+    else if (Type.is(schk, Number)) {
+      var val = readlineSync.question("Enter the " + k + ": ");
+      entityHash[k] = parseInt(val);
+    }
+    else if (Type.is(schk, Array)) {
+      var done = false;
+      var arr = new Array();
+      while (!done) {
+        var val = readlineSync.question("  Enter aggregate value for " + k + ": ");
+        if (val != '') {
+          arr.push(val);
+        }
+        else done = true;
+      }
+      entityHash[k] = arr;
+    }
+    else if (Type.is(schk, Object)) {
+      var done = false;
+      var hash = {};
+      while (!done) {
+        var label = readlineSync.question("  Enter aggregate label: ");
+        var val = readlineSync.question("  Enter aggregate val: ");
+        if (label == '' || val == ''){
+          done = true;
+        }
+        else {
+          hash[label] = val;
+        }
+      }
+      entityHash[k] = hash;
+    }
+  });
+
+  ent.atts = entityHash;
+  ent.toTable();
 }
 

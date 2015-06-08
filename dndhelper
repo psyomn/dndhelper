@@ -13,6 +13,7 @@ function printHelp() {
   console.log("  --lsschema to show the schemas");
   console.log("  --setschema to set the schemas");
   console.log("  --show-entities to show all entities");
+  console.log("  --create-entity to create an entity, based on selected schema");
   process.exit();
 }
 
@@ -35,8 +36,11 @@ else if (argv['setschema'] != undefined) {
 else if (argv['lsschema'] != undefined) {
   config.lsSchemas();
 }
+else if (argv['create-entity'] != undefined) {
+  console.log(config.readSchema());
+  entity_factory.createEntityInteractive();
+}
 else if (argv['show-entities']) {
-  /* TODO this should actually get whatever is set from the datasources  */
   var filename = config.getDataSourceFilename();
   var entities = entity_factory.makeFromJSON(filename);
   entities.forEach(function(e){

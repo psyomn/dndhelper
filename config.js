@@ -3,6 +3,7 @@ module.exports = {
   lsSchemas:     lsSchemas,
   setDataSource: setDataSource,
   setSchemaSource: setSchemaSource,
+  readSchema: readSchema,
 };
 
 var constants = require('./constants.js');
@@ -10,6 +11,7 @@ var fs        = require('fs');
 var colors    = require('colors');
 var util      = require('util');
 var sprintf   = require('sprintf-js').sprintf;
+var path      = require('path');
 
 /*
  * This should take care setting information about the overall project.
@@ -137,5 +139,8 @@ function writeConfiguration(json) {
 
 function readSchema() {
   var filename = getSchemaSource();
+  var abspath = path.join(constants.DATADIR, filename);
+  var contents = fs.readFileSync(abspath);
+  return JSON.parse(contents);
 }
 
