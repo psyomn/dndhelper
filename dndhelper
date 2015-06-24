@@ -42,7 +42,7 @@ else if (argv['create-entity'] != undefined) {
   entity_factory.createEntityInteractive();
 }
 else if (argv['show-entities']) {
-  var filename = config.getDataSourceFilename();
+  var filename = config.getDataSource();
   var entities = entity_factory.makeFromJSON(filename);
   entities.forEach(function(e){
      e.toTable();

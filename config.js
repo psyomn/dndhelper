@@ -4,6 +4,7 @@ module.exports = {
   setDataSource: setDataSource,
   setSchemaSource: setSchemaSource,
   readSchema: readSchema,
+  getDataSource: getDataSource,
 };
 
 var constants = require('./constants.js');
